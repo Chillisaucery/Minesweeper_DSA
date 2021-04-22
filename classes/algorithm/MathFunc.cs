@@ -26,4 +26,24 @@ public class MathFunc
         return (false);
     }
 
+    //Given a boolean 2D array and a position, check the surrounding elements of the position to see if the surrounding contains the value "True"
+    /// <param name="array"> The boolean 2D array </param>
+    /// <param name="height"> Height of the array </param>
+    /// <param name="width"> Width of the array </param>
+    /// <param name="x"> Coordinate x </param>
+    /// <param name="y"> Coordinate y </param>
+    /// <returns> A boolean </returns>
+    public static bool CheckSurrounding( bool[,] array, int height, int width, int x, int y)
+    {
+        for (int i = x-1; i<=x+1; i++)
+            for (int j = y-1; j <= y+1; j++)
+                if ((i>=0) && (i<=height-1) && (j>=0) && (j<=width-1))
+                {
+                    if (array[i, j] == true)
+                        return (true);                                          
+                }
+
+        return (false);
+    }
+
 }

@@ -6,7 +6,7 @@ namespace Minesweeper.classes
 {
     /// <summary>
     /// State Board contains the state of each cell of the board (revealed or not revealed)
-    /// Contributors: Chillisauce 20 April
+    /// Contributors: Chillisauce 23 April
     /// </summary>
     public class StateBoard
     {
@@ -58,22 +58,53 @@ namespace Minesweeper.classes
         // The function currently is in development
         public void revealCell(int x, int y, char[,] indexBoard)
         {
+            //Variables
+            //This boolean 2D array represent the cells that has been opened during the a call of this function.
+            //One array is generated per call and used only in that call
+            bool[,] ifOpened = new bool[height, width];
+
+            //This is the diameter of the cell expansion.
+            int expandingRadius = 0;
+
+            //Reveal the target cell
             stateBoard[x, y] = true;
+            if (indexBoard[x,y] == ' ') //If the target cell is empty
+                ifOpened[x, y] = true;  //Set the origin of the expansion to true, allowing the expansion to occur
 
-            int counter = 0;
-
-            /*
-            while (counter <= (height + width) / 4)
+            //Revealing the surrounding cells
+            while ( (expandingRadius <= height/2) && (expandingRadius <= width/2) ) // stop expanding when the radius reach half of the height or width
             {
-                counter++;
+                expandingRadius++; //Expand the radius
 
-                for (int i = x - counter; i <= x + counter; i++)
-                    for (int j = y - counter; j <= y + counter; j++)
-                        if ((i < height) && (j < width) && (i >= 0) && (j >= 0))
-                            if (indexBoard[i, j] != 'X')
-                                stateBoard[i, j] = true;
+                //Looping through the area within radius
+                for (int i = x - expandingRadius; i <= x + expandingRadius; i++)
+                    for (int j = y - expandingRadius; j <= y + expandingRadius; j++)
+                        if ((i < height) && (j < width) && (i >= 0) && (j >= 0) )
+                        {
+                            //Check the 8 surrounding cell to know if there were any cells opened
+                            //Check if this cells if empty or not
+                            //If both the condition is satisfied, reveal the 8 surrounding cells
+                            if (MathFunc.CheckSurrounding(ifOpened, height, width, i, j) && indexBoard[i, j] == ' ')
+                            {
+                                RevealSquare(i, j);
+                                ifOpened[i, j] = true;  //Mark the cell as opened
+                            }      
+                        }
             }
-            */
+            
+        }
+
+        //Input a position of a stateBoard, reveal the cell at that position and the 8 cells surrounding it.
+        /// <param name="x"> Coordinate x </param>
+        /// <param name="y"> Coordinate y </param>
+        public void RevealSquare(int x, int y)
+        {
+            for (int i = x - 1; i <= x + 1; i++)
+                for (int j = y - 1; j <= y + 1; j++)
+                    if ((i >= 0) && (i <= height - 1) && (j >= 0) && (j <= width - 1))
+                    {
+                        stateBoard[i, j] = true;
+                    }
         }
 
         //Display the stateBoard
