@@ -19,6 +19,7 @@ namespace Minesweeper.classes
         //Variables
         private int height;
         private int width;
+        private int mineNum;
 
         /// <summary>
         /// Constructor
@@ -35,6 +36,7 @@ namespace Minesweeper.classes
             //Record
             this.height = height;
             this.width = width;
+            this.mineNum = mineNum;
         }
 
         // Initialise the boards, fill the indexBoard and the stateBoard with values
@@ -51,7 +53,8 @@ namespace Minesweeper.classes
             this.stateBoard.createStateBoard();
             Console.Clear();
 
-            while (true)
+            bool won = true;
+            while (won)
             {
                 Console.WriteLine("Input the position to reveal (x,y): ");
                 int x = Convert.ToInt32(Console.ReadLine());
@@ -59,8 +62,10 @@ namespace Minesweeper.classes
 
                 stateBoard.revealCell(x, y, indexBoard.getIndexBoard());
                 displayBoard();
+                won = this.stateBoard.winCondition(mineNum);
             }
         }
+        
 
         // Display the board to the console
         public void displayBoard()
