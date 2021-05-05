@@ -135,5 +135,23 @@ namespace Minesweeper.classes
             fillFalse();
             displayStateBoard();
         }
+    public bool winCondition(int mines){
+            int count = 0;
+            for(int i = 0; i < height; i++){
+                for(int j = 0; j < width; j++){
+                    if(stateBoard[i, j] == true){
+                        count++;
+                    }
+                }
+            }
+            if(count == ((width * height) - mines)){
+                Console.Write("You win\n");
+                return false;
+            };
+            return true;
+        }
+        
     }
+    
 }
+
