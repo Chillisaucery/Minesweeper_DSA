@@ -66,28 +66,40 @@ namespace Minesweeper.classes
             //This is the diameter of the cell expansion.
             int expandingRadius = 0;
 
+            //A variable to check if the expansion can further occur
+            bool canExpand = false;
+
             //Reveal the target cell
             stateBoard[x, y] = true;
             if (indexBoard[x,y] == ' ') //If the target cell is empty
+                {
                 ifOpened[x, y] = true;  //Set the origin of the expansion to true, allowing the expansion to occur
-
+                canExpand = true;
+                }
+                
             //Revealing the surrounding cells
-            while ( (expandingRadius <= height/2) && (expandingRadius <= width/2) ) // stop expanding when the radius reach half of the height or width
+            while ( canExpand ) // stop expanding when the radius reach half of the height or width
             {
                 expandingRadius++; //Expand the radius
+                canExpand = false;
 
                 //Looping through the area within radius
                 for (int i = x - expandingRadius; i <= x + expandingRadius; i++)
                     for (int j = y - expandingRadius; j <= y + expandingRadius; j++)
                         if ((i < height) && (j < width) && (i >= 0) && (j >= 0) )
                         {
-                            //Check the 8 surrounding cell to know if there were any cells opened
-                            //Check if this cells if empty or not
-                            //If both the condition is satisfied, reveal the 8 surrounding cells
-                            if (MathFunc.CheckSurrounding(ifOpened, height, width, i, j) && indexBoard[i, j] == ' ')
+                            //Check the 8 surrounding cell to know if there were any cells opened (satisfied if there was)
+                            //Check if this cells is empty or not (satisfied if empty)
+                            //Check if this cells is opened or not (satisfied if not opened yet)
+                            //If all the conditions are satisfied, reveal it and its 8 surrounding cells
+                            if (MathFunc.CheckSurrounding(ifOpened, height, width, i, j) && indexBoard[i, j] == ' '
+                                && ifOpened[i,j] == false)
                             {
                                 RevealSquare(i, j);
                                 ifOpened[i, j] = true;  //Mark the cell as opened
+                                //If there is at least 1 cell opened in this loop, the expansion can continue
+                                //Otherwise, it cannot
+                                canExpand = true;   
                             }      
                         }
             }
