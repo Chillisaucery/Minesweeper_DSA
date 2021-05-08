@@ -35,6 +35,8 @@ namespace Minesweeper.classes
             stateBoard = new bool[height, width];
         }
 
+        
+
         //Fill every cells with the value "false"
         private void fillFalse()
         {
@@ -124,6 +126,7 @@ namespace Minesweeper.classes
                 {
                     if (stateBoard[i, j] == false)
                         Console.Write(".");
+                    else Console.Write(" ");
                 }
                 Console.WriteLine();
             }
@@ -149,6 +152,20 @@ namespace Minesweeper.classes
                 return false;
             };
             return true;
+        }
+
+        public StateBoard(int height, int width, bool[,] stateBoard)
+        {
+            this.height = height;
+            this.width = width;
+            this.stateBoard = stateBoard;
+        }
+
+        public StateBoard Clone()
+        {
+            Console.WriteLine("Cloned");
+            displayStateBoard();
+            return new StateBoard(height, width, stateBoard);
         }
         
     }
