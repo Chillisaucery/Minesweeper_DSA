@@ -56,9 +56,10 @@ namespace Minesweeper.classes
 
             this.indexBoard.createIndexBoard();
             this.stateBoard.createStateBoard();
-            Console.Clear();
 
-            
+            undoStack.Push(new StateBoard(height, width, stateBoard.getStateBoard()));
+
+            Console.Clear();
 
             bool won = true;
             while (won)
@@ -70,39 +71,33 @@ namespace Minesweeper.classes
 
                 if(x == -1 && y == -1)
                 {
-                    undoFunc();
-                    Console.WriteLine("Undo function");
+                    UndoFunc();
                 }
+
                 if(x == -2 && y == -2)
                 {
-
-                    redoFunc();
-                    Console.WriteLine("Redo function");
+                    RedoFunc();
                 }
-                if(x > -1 && y > -1)
+
+                if (x > -1 && y > -1)
                 {
-                    undoStack.Push(stateBoard.Clone());
                     stateBoard.revealCell(x, y, indexBoard.getIndexBoard());
-                    
+                    undoStack.Push(stateBoard.Clone());
+                    stateBoard.displayStateBoard();
                 }
-                
-
-                //previousSteps.push((ArrayList<Integer>)array.clone());
-                
-                
 
                 displayBoard();
                 won = this.stateBoard.winCondition(mineNum);
             }
         }
         
-        public void undoFunc()
+        public void UndoFunc()
         {
             redoStack.Push(  undoStack.Pop().Clone() );
             this.stateBoard = undoStack.Peek().Clone();
         }
 
-        public void redoFunc()
+        public void RedoFunc()
         {
             undoStack.Push(redoStack.Pop().Clone());
             this.stateBoard = redoStack.Peek().Clone();
