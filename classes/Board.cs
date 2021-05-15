@@ -21,6 +21,10 @@ namespace Minesweeper.classes
         private int width;
         private int mineNum;
 
+        
+        Stack<StateBoard> undoStack = new Stack<StateBoard>();
+        Stack<StateBoard> redoStack = new Stack<StateBoard>();
+
         /// <summary>
         /// Constructor
         /// With given params, it initialise (creates new blank) indexBoard and stateBoard
@@ -49,23 +53,55 @@ namespace Minesweeper.classes
         // Start the game, allow the player to input x and y to reveal cells
         public void Start()
         {
+
             this.indexBoard.createIndexBoard();
             this.stateBoard.createStateBoard();
+
+            undoStack.Push(new StateBoard(height, width, stateBoard.getStateBoard()));
+
             Console.Clear();
 
             bool won = true;
             while (won)
             {
+               
                 Console.WriteLine("Input the position to reveal (x,y): ");
                 int x = Convert.ToInt32(Console.ReadLine());
                 int y = Convert.ToInt32(Console.ReadLine());
 
-                stateBoard.revealCell(x, y, indexBoard.getIndexBoard());
+                if(x == -1 && y == -1)
+                {
+                    UndoFunc();
+                }
+
+                if(x == -2 && y == -2)
+                {
+                    RedoFunc();
+                }
+
+                if (x > -1 && y > -1)
+                {
+                    stateBoard.revealCell(x, y, indexBoard.getIndexBoard());
+                    undoStack.Push(stateBoard.Clone());
+                    stateBoard.displayStateBoard();
+                }
+
                 displayBoard();
                 won = this.stateBoard.winCondition(mineNum);
             }
         }
         
+        public void UndoFunc()
+        {
+            redoStack.Push(  undoStack.Pop().Clone() );
+            this.stateBoard = undoStack.Peek().Clone();
+        }
+
+        public void RedoFunc()
+        {
+            undoStack.Push(redoStack.Pop().Clone());
+            this.stateBoard = redoStack.Peek().Clone();
+        }
 
         // Display the board to the console
         public void displayBoard()

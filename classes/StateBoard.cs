@@ -18,11 +18,13 @@ namespace Minesweeper.classes
         //True means revealed, false means not revealed.
         private bool[,] stateBoard;
 
+
         //Getter
         public bool[,] getStateBoard()
         {
-            return (stateBoard);
+            return (this.stateBoard);
         }
+
 
         //Constructor. It create a new empty 2D array stateBoard
         public StateBoard(int height, int width)
@@ -35,6 +37,19 @@ namespace Minesweeper.classes
             stateBoard = new bool[height, width];
         }
 
+        public StateBoard(int height, int width, bool[,] stateBoard)
+        {
+            this.height = height;
+            this.width = width;
+            this.stateBoard = new bool[height, width];
+
+            //Deep copy the stateboard from the param into this stateboard
+            for (int i = 0; i < height; i++)
+                for (int j = 0; j < width; j++)
+                    this.stateBoard[i, j] = stateBoard[i, j];
+        }
+
+
         //Fill every cells with the value "false"
         private void fillFalse()
         {
@@ -43,6 +58,7 @@ namespace Minesweeper.classes
                     stateBoard[i, j] = false;
         }
 
+
         //Fill the target cell with the value "true"
         /// <param name="x"> The coordinate x of the input </param>
         /// <param name="y"> The coordinate y of the input </param>
@@ -50,6 +66,7 @@ namespace Minesweeper.classes
         {
             stateBoard[x, y] = true;
         }
+
 
         //Fill the target cell with the value "true" and expand to the surrounding area, base on the value of indexBoard
         /// <param name="x"> The coordinate x of the input </param>
@@ -106,6 +123,7 @@ namespace Minesweeper.classes
             
         }
 
+
         //Input a position of a stateBoard, reveal the cell at that position and the 8 cells surrounding it.
         /// <param name="x"> Coordinate x </param>
         /// <param name="y"> Coordinate y </param>
@@ -118,6 +136,7 @@ namespace Minesweeper.classes
                         stateBoard[i, j] = true;
                     }
         }
+
 
         //Display the stateBoard
         public void displayStateBoard()
@@ -136,10 +155,12 @@ namespace Minesweeper.classes
                 {
                     if (stateBoard[i, j] == false)
                         Console.Write(".");
+                    else Console.Write(" ");
                 }
                 Console.WriteLine();
             }
         }
+
 
         //Fill the values into the board
         public void createStateBoard()
@@ -147,7 +168,10 @@ namespace Minesweeper.classes
             fillFalse();
             displayStateBoard();
         }
-    public bool winCondition(int mines){
+        
+
+        //The win condition.
+        public bool winCondition(int mines){
             int count = 0;
             for(int i = 0; i < height; i++){
                 for(int j = 0; j < width; j++){
@@ -161,6 +185,13 @@ namespace Minesweeper.classes
                 return false;
             };
             return true;
+        }
+
+
+        //Deep copy a StateBoard object
+        public StateBoard Clone()
+        {
+            return new StateBoard(height, width, stateBoard);    
         }
         
     }
