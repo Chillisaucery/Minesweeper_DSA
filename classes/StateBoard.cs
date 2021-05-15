@@ -191,7 +191,7 @@ namespace Minesweeper.classes
         bool lose = false;
          for(int i = 0; i < height; i++){
                 for(int j = 0; j < width; j++){
-                    if(indexBoard[x,y] == 'X' && stateBoard[i, j] = true ){
+                    if(indexBoard[x,y] == 'X' && stateBoard[i, j] == true ){
                         lose = true;
                     }
                 }
