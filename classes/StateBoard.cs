@@ -179,18 +179,16 @@ namespace Minesweeper.classes
 
         //lose condition
         public bool losecondition(int x,int y,char[,] indexBoard) {
-        bool lose = false;
-         for(int i = 0; i < height; i++){
-                for(int j = 0; j < width; j++)
-                {
-                    if (indexBoard[x, y] == 'X' && stateBoard[i, j] = true)
-                    {
+            bool lose = false;
+            for(int i = 0; i < height; i++){
+                for(int j = 0; j < width; j++){
+                    if(indexBoard[x,y] == 'X' && stateBoard[i, j] == true ){
                         lose = true;
                     }
                 }
             }
             return lose;
-        }
+    }
 
         //Deep copy a StateBoard object
         public StateBoard Clone()
