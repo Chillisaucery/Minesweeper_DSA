@@ -93,14 +93,26 @@ namespace Minesweeper.classes
         
         public void UndoFunc()
         {
-            redoStack.Push(  undoStack.Pop().Clone() );
-            this.stateBoard = undoStack.Peek().Clone();
+            try
+            {
+                redoStack.Push(undoStack.Pop().Clone());
+                this.stateBoard = undoStack.Peek().Clone();
+            }
+            catch(Exception) { }
         }
 
         public void RedoFunc()
         {
-            undoStack.Push(redoStack.Pop().Clone());
-            this.stateBoard = redoStack.Peek().Clone();
+            try
+            {
+                this.stateBoard = redoStack.Peek().Clone();
+                undoStack.Push(redoStack.Pop().Clone());
+            }
+            catch(Exception)
+            {
+                //Console.WriteLine(e1.Message);
+            }
+            
         }
 
         // Display the board to the console
