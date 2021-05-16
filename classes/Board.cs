@@ -110,7 +110,7 @@ namespace Minesweeper.classes
             }
             catch(Exception)
             {
-                //Console.WriteLine(e1.Message);
+               
             }
             
         }
