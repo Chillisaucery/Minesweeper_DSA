@@ -90,7 +90,7 @@ namespace Minesweeper.classes
                 won = this.stateBoard.winCondition(mineNum);
             }
         }
-        
+        //Undo function and Try not to make stack be empty
         public void UndoFunc()
         {
             try
@@ -101,6 +101,7 @@ namespace Minesweeper.classes
             catch(Exception) { }
         }
 
+        // Redo Function and Try not to make stack be empty 
         public void RedoFunc()
         {
             try
