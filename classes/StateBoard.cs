@@ -10,6 +10,8 @@ namespace Minesweeper.classes
     /// </summary>
     public class StateBoard
     {
+        private const bool V = true;
+
         //Variables
         private int height;
         private int width;
@@ -186,10 +188,12 @@ namespace Minesweeper.classes
             };
             return true;
         }
+
+
         //lose condition
         public bool losecondition(int x,int y,char[,] indexBoard) {
-        bool lose = false;
-         for(int i = 0; i < height; i++){
+            bool lose = false;
+            for(int i = 0; i < height; i++){
                 for(int j = 0; j < width; j++){
                     if(indexBoard[x,y] == 'X' && stateBoard[i, j] == true ){
                         lose = true;
