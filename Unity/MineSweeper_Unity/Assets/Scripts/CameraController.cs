@@ -21,12 +21,12 @@ public class CameraController : MonoBehaviour
 
     void Update()
     {
-        if (Input.GetMouseButtonDown(2))    //IF middle mouse is pressed
+        if (Input.GetMouseButtonDown(0))
         {
             origin = Input.mousePosition;
         }
 
-        if (Input.GetMouseButton(2))    //If middle mouse is keep pressed
+        if (Input.GetMouseButton(0))
         {
             newMousePoint = Input.mousePosition;
             Vector3 newPosition = gameObject.transform.position + (origin - newMousePoint) * dragSpeed;

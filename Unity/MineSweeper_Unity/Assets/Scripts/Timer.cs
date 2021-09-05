@@ -18,8 +18,7 @@ public class Timer : MonoBehaviour
 
         if (controller.CheckIfPlayable())
         {
-            if (miliSec<999)
-                miliSec += Time.deltaTime;
+            miliSec += Time.deltaTime;
             Debug.Log("Updated " + canRun + " " + miliSec);
 
             UpdateText();

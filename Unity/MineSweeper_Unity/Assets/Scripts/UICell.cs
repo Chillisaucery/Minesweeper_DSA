@@ -57,7 +57,7 @@ public class UICell : MonoBehaviour, IPointerClickHandler
         }
 
         //if player select a cell that is already opened and has at least a flag in 8 cells around it
-        else 
+        if (value != 'c')
         {
             if (uiBoard.CheckFlagAroundCell(x, y))
             {

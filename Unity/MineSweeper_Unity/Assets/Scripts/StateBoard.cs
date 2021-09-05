@@ -178,13 +178,16 @@ namespace Minesweeper.classes
         public bool WinCondition(int mines)
         {
             int count = 0;
-
-            foreach (bool state in stateBoard)
-                if (state == true)
+            for (int i = 0; i < height; i++)
+            {
+                for (int j = 0; j < width; j++)
                 {
-                    count++;
+                    if (stateBoard[i, j] == true)
+                    {
+                        count++;
+                    }
                 }
-
+            }
             if (count == ((width * height) - mines))
             {
                 return true;
